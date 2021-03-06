@@ -5,4 +5,4 @@ Export the zip file to start using the application.
 
 Theres a screenshot button within the app that gets sent to the app data folder.
 
-Enojoy!
+Enjoy!
