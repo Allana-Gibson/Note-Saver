@@ -10,6 +10,8 @@ public class ScreenshotHandler : MonoBehaviour {
     private Camera myCamera;
     private bool takeScreenshotOnNextFrame;
 
+    long num = 1;
+
     private void Awake() {
         instance = this;
         myCamera = gameObject.GetComponent<Camera>();
@@ -17,6 +19,16 @@ public class ScreenshotHandler : MonoBehaviour {
 
     private void OnPostRender() {
         if (takeScreenshotOnNextFrame) {
+
+            if (num < 999999)
+            {
+                num++;
+            }
+            else
+            {
+                num = 1;
+            }
+
             takeScreenshotOnNextFrame = false;
             RenderTexture renderTexture = myCamera.targetTexture;
 
@@ -25,8 +37,8 @@ public class ScreenshotHandler : MonoBehaviour {
             renderResult.ReadPixels(rect, 0, 0);
 
             byte[] byteArray = renderResult.EncodeToPNG();
-            System.IO.File.WriteAllBytes(Application.dataPath + "/CameraScreenshot.png", byteArray);
-            Debug.Log("Saved CameraScreenshot.png");
+            System.IO.File.WriteAllBytes(Application.dataPath + "/CameraScreenshot" + num.ToString() + ".png", byteArray);
+            Debug.Log("Saved CameraScreenshot" + num.ToString() + ".png");
 
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
